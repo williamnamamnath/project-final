@@ -60,7 +60,7 @@ const blankInput = !firstName || !lastName || !message;
                         <input className="msg-field" type="text" value={message} onChange={userMessage}></input>
                         <br/>
                         <br/>
-                        <Link to="/success" style={{color:"black", textDecoration:"none"}}>
+                        <Link to="/contact-success" style={{color:"black", textDecoration:"none"}}>
                             <button className="website-btn" type="submit" disabled={blankInput}>Submit</button>
                         </Link> 
                         <br/>

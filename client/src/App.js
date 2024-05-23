@@ -9,6 +9,7 @@ import TOS from "./pages/TOS";
 import ContactSuccess from "./pages/ContactSuccess";
 import Login from "./pages/UserAccount/Login";
 import Signup from "./pages/UserAccount/Signup";
+import SignupSuccess from "./pages/UserAccount/SignupSuccess";
 
 
 function App() {
@@ -22,9 +23,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/tos" element={<TOS />} />
-          <Route path="/success" element={<ContactSuccess />} />
+          <Route path="/contact-success" element={<ContactSuccess />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/signup-success" element={<SignupSuccess />} />
         </Routes>
       </Router>
     </>

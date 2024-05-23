@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Wrapper } from "./Home/Home";
 import { PageSpacing, H1 } from "./Contact";
 import { ContentWrapper } from "./TOS";
-import Navbar from "../pages/components/Navbar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 const About = () => {

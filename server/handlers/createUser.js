@@ -19,7 +19,7 @@ const createUser = async (req, res) => {
         };
 
         const saltRounds = 10;
-        const userPassword = await bcrypt.hash(password, saltRounds);
+        const hiddenPassword = await bcrypt.hash(pwd, saltRounds);
 
         const newUser = {
             _id: uuidv4(),
@@ -27,7 +27,7 @@ const createUser = async (req, res) => {
             lastName,
             email,
             phone,
-            pwd: userPassword
+            pwd: hiddenPassword
         }
 
         const createNewUser = await db.collection("users").insertOne(newUser);

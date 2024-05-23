@@ -1,3 +1,4 @@
-const createUser = require("../server/handlers/createUser"); 
+const createUser = require("./handlers/createUser"); 
+const userLogin = require("./handlers/userLogin");
 
-module.exports = { createUser };
+module.exports = { createUser, userLogin };

@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Wrapper } from "../Home/Home";
 import { PageSpacing, H1 } from "../Contact";
 import { ContentWrapper } from "../TOS";
 import { H3 } from "./Login";
+
+import { LoginInfoContext } from "./LoginInfo";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
@@ -13,70 +16,84 @@ const Signup = () => {
         document.title = "Signup"
     }, []);
 
-    const [userSignup, setUserSignup] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        pwd: "",
-        confirmPwd: ""
-    });
+    const [error, setError] = useState("");
+    const [userFname, setUserFname] = useState("");
+    const [userLname, setUserLname] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    const [userPwd, setUserPwd] = useState("");
+    const [userConfirmPwd, setUserConfirmPwd] = useState("");
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setUserSignup({ ...userSignup, [name]: value });
+    const { loggedIn } = useContext(LoginInfoContext);
+    const navigate = useNavigate();
+
+    const SUFname = (event) => {
+        setUserFname(event.target.value);
       };
 
-    const blankInput = !userSignup.firstName || !userSignup.lastName || !userSignup.email || !userSignup.phone || !userSignup.pwd || !userSignup.confirmPwd;       
+      const SULname = (event) => {
+        setUserLname(event.target.value);
+      };
 
-    const handleSignup = (event) => {
-        event.preventDefault();
-    };
+      const SUEmail = (event) => {
+        setUserEmail(event.target.value);
+      };
 
-    const passwordHandler = async (event) => {
+      const SUPhone = (event) => {
+        setUserPhone(event.target.value);
+      };
+
+      const SUPwd = (event) => {
+        setUserPwd(event.target.value);
+      };
+
+      const SUConfirmPwd = (event) => {
+        setUserConfirmPwd(event.target.value);
+      };
+
+    const blankInput = !userFname || !userLname || !userEmail || !userPhone || !userPwd || !userConfirmPwd;       
+
+    const handleSignup = async (event) => {
         event.preventDefault();
 
     try {
-      const {
-        firstName,
-        lastName,
-        email,
-        phone,
-        pwd,
-        confirmPwd,
-      } = userSignup;
-      const response = await fetch("/signUp", {
+      const response = await fetch("/signup", {
         method: "POST",
         headers: {
+          'Accept': 'application/json',
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phone,
-          pwd,
-          confirmPwd,
+          userFname,
+          userLname,
+          userEmail,
+          userPhone,
+          userPwd,
+          userConfirmPwd,
         }),
       });
 
       if (response.ok) {
-        await response.json();
+        const userInfo = await response.json();
+        await loggedIn(userInfo);
 
-        setUserSignup({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          pwd: "",
-          confirmPwd: "",
-        });
+        setUserFname("");
+        setUserLname("");
+        setUserEmail("");
+        setUserPhone("");
+        setUserPwd("");
+        setUserConfirmPwd("");
+
+        navigate("/signup-success");
+
       } else {
-        const errorMessage = await response.text();
-        console.log("Signup failed: ", errorMessage);
+        const errorTriggered = await response.text();
+        const errorMsg = JSON.parse(errorTriggered).message;
+        setError(errorMsg);
+        console.log(errorMsg);
       }
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }};
 
     return (
@@ -95,10 +112,11 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userSignup.firstName}
+                    value={userFname}
                     name="first-name"
-                    onChange={handleChange}
+                    onChange={SUFname}
                     placeholder="E.g. John"
+                    required
                 ></input>
                 <br />
                 <br />
@@ -107,10 +125,11 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userSignup.lastName}
+                    value={userLname}
                     name="last-name"
-                    onChange={handleChange}
+                    onChange={SULname}
                     placeholder="E.g. Smith"
+                    required
                 ></input>
                 <br/>
                 <br/>
@@ -119,34 +138,26 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userSignup.email}
+                    value={userEmail}
                     name="email"
-                    onChange={handleChange}
+                    onChange={SUEmail}
                     placeholder="E.g. johnsmith@email.com"
+                    required
                 ></input>
                 <br/>
                 <br/>
-                <label>Email Address: </label>
+                <label>Phone: 
+                <br/>
+                <small>Format: 123-456-789</small>
+                </label>
                 <br />
                 <input
                     className="input-field"
-                    type="text"
-                    value={userSignup.email}
-                    name="email"
-                    onChange={handleChange}
-                    placeholder="E.g. Your email address"
-                ></input>
-                <br />
-                <br />
-                <label>Phone: </label>
-                <br />
-                <input
-                    className="input-field"
-                    type="text"
-                    value={userSignup.phone}
+                    type="tel"
+                    value={userPhone}
                     name="phone"
-                    onChange={handleChange}
-                    placeholder="E.g. 123-456-7890"
+                    onChange={SUPhone}
+                    required
                 ></input>
                 <br />
                 <br />
@@ -155,9 +166,10 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="password"
-                    value={userSignup.password}
+                    value={userPwd}
                     name="password"
-                    onChange={passwordHandler}
+                    onChange={SUPwd}
+                    required
                 ></input>
                 <br />
                 <br />
@@ -165,16 +177,18 @@ const Signup = () => {
                 <br />
                 <input
                     className="input-field"
-                    type="text"
-                    value={userSignup.email}
+                    type="password"
+                    value={userConfirmPwd}
                     name="confirm-password"
-                    onChange={passwordHandler}
+                    onChange={SUConfirmPwd}
+                    required
                 ></input>
                 <br />
                 <br />
                 <button className="website-btn" disabled={blankInput}>
                 Sign Up
                 </button>
+                {error && <p>{error}</p>}
             </form>
             </ContentWrapper>
             </Wrapper>

@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Wrapper } from "../Home/Home";
 import { ContentWrapper } from "../TOS";
 import { PageSpacing, H1 } from "../Contact";
+import styled from "styled-components";
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import styled from "styled-components";
+import { LoginInfoContext } from "./LoginInfo";
 
 const Login = () => {
 
@@ -13,10 +16,14 @@ const Login = () => {
         document.title = "Login"
     }, []);
 
+    const { loggedIn } = useContext(LoginInfoContext);
+    const navigate = useNavigate();
+
     const [userLogin, setUserLogin] = useState({
         email: "",
         password: ""
     });
+    const [error, setError] = useState("");
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -25,8 +32,34 @@ const Login = () => {
 
     const blankInput = !userLogin.email || !userLogin.password;
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
+
+        try {
+            const response = await fetch("/login", {
+                method: "POST",
+                headers: {
+                    "content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: userLogin.email,
+                    password: userLogin.password
+                }),
+            });
+
+            if (response.ok) {
+                const userInfo = await response.json();
+                await loggedIn(userInfo);
+                navigate("/");
+            } else {
+                const errorTriggered = await response.text();
+                const errorMsg = JSON.parse(errorTriggered).message;
+                setError(errorMsg);
+              };
+
+        } catch (error) {
+            setError(error.message);
+        }
     };
 
     return (
@@ -72,6 +105,7 @@ const Login = () => {
                         <br/>
                         Sign up <a href="/signup">here!</a>
                         </p>
+                        {error && <p>{error}</p>}
                     </form>
                 </ContentWrapper>
             </Wrapper>

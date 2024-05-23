@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { Wrapper } from "./Home/Home";
 import { PageSpacing, H1 } from "./Contact";
-import Navbar from "../pages/components/Navbar";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import styled from "styled-components";
 

@@ -9,7 +9,7 @@ const Navbar = () => {
               <h1>NUTRISSENCE</h1>
             </Link>
             <ul>
-              <Link to="/favorites" className="navLink">
+            <Link to="/favorites" className="navLink">
                 <li>My Favorites</li>
               </Link>
               <Link to="/contact" className="navLink">
