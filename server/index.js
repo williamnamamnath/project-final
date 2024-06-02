@@ -25,7 +25,7 @@ app.post("/signup", createUser);
 app.get("/api/getFavorites", getFavorites);
 app.delete("/api/deleteFavorite/:id", deleteFavorite);
 app.post("/api/addFavorites", addFavorites);
-app.put("/api/updateDescription", updateDescription);
+app.put("/api/updateDescription/:id", updateDescription);
 
 
 //a catch-all endpoint

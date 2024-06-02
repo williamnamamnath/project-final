@@ -35,14 +35,14 @@ const MyFavorites = () => {
     setLabelName(inputValue);
     setIsEditing(false);
 
-    await fetch("/api/updateDescription/", {
-        method: "PATCH",
+    await fetch(`/api/updateDescription/${item}`, {
+        method: "PUT",
         headers: { 
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            Name: item.label,
-            Description: listDescription
+            name: item.label,
+            description: listDescription
         })
       });
   };
