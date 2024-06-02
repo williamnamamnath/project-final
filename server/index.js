@@ -2,35 +2,38 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const bodyParser = require("body-parser"); 
+const cors = require("cors");
 
-const { createUser, userLogin } = require("./handlers");
+const { 
+  createUser, 
+  userLogin, 
+  getFavorites, 
+  deleteFavorite, 
+  addFavorites,
+  updateDescription 
+} = require("./handlers");
 
-const PORT = process.env.PORT || 4000;
 const app = express();
 
-
-app.use(function (req, res, next) {
-    res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
-    );
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  });
-
 app.use(morgan('tiny'));
-app.use(express.static('./server/assets'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use('/', express.static(__dirname + '/'));
-app.use(bodyParser.json()); 
+app.use(cors());
 
 //handler functions
-app.post("/signup", userLogin);
-app.post("/login", createUser);
+app.post("/login", userLogin);
+app.post("/signup", createUser);
+app.get("/api/getFavorites", getFavorites);
+app.delete("/api/deleteFavorite/:id", deleteFavorite);
+app.post("/api/addFavorites", addFavorites);
+app.put("/api/updateDescription", updateDescription);
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+//a catch-all endpoint
+app.get("*", (req, res) => {
+  res.status(404).json({
+  status: 404,
+  message: "This is not the page you're looking for!",
+  });
+})
+
+app.listen(3000, () => console.log(`Listening on port 3000.`));

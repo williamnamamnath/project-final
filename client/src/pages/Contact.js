@@ -47,13 +47,15 @@ const blankInput = !firstName || !lastName || !message;
                         We're looking forward to hearing from you!
                         </H3>
                         <br/>
-                        <label>First Name: </label>
+                        <label>Full Name: </label>
                         <br/>
-                        <input className="input-field" type="text" value={firstName} onChange={userFirstName}></input>
+                        <input className="input-field" type="text" value={firstName} onChange={userFirstName} placeholder="E.g. John Doe"></input>
                         <br/>
-                        <label>Last Name: </label>
                         <br/>
-                        <input className="input-field" type="text" value={lastName} onChange={userLastName}></input>
+                        <label>Email: </label>
+                        <br/>
+                        <input className="input-field" type="text" value={lastName} onChange={userLastName} placeholder="e.g.john@doe.com"></input>
+                        <br/>
                         <br/>
                         <label>Your Message: </label>
                         <br/>

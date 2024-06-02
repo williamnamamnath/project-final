@@ -4,37 +4,35 @@ export const LoginInfoContext = createContext();
 
 const LoginInfoProvider = ({ children }) => {
 
+const [loginConfirmed, setLoginConfirmed] = useState(false);
 const [signedIn, setSignedIn] = useState({
     _id: "",
-    firstName: "",
-    lastName: "",
+    fname: "",
+    lname: "",
     email: "",
     phone: ""
 });
 
-const [isAuthenticated, setIsAuthenticated] = useState(false);
-const [loginConfirmed, setLoginConfirmed] = useState(false);
 
 const loggedIn = (userInfo) => {
     setSignedIn(userInfo);
     setLoginConfirmed(true);
-    setIsAuthenticated(true);
 };
 
 const signedOut = () => {
     setSignedIn({
-    _id: "",
-    firstName: "",
+    fname: "",
     lastName: "",
     email: "",
     phone: ""
     });
 
     setLoginConfirmed(false);
+    window.localStorage.removeItem("loginConfirmed");
 };
 
 return (
-    <LoginInfoContext.Provider value={{ signedIn, loginConfirmed, loggedIn, signedOut, isAuthenticated }}>
+    <LoginInfoContext.Provider value={{ signedIn, loginConfirmed, loggedIn, signedOut }}>
         {children}
     </LoginInfoContext.Provider>
 )};

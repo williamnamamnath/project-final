@@ -5,14 +5,14 @@ const bcrypt = require('bcrypt');
 
 const userLogin = async (req, res) => {
 
-const { email, pwd } = req.body;
+const { email, password } = req.body;
 const client = new MongoClient(MONGO_URI);
 
 if (email === "" || email === undefined || email === null) {
     return res.status(400).json({ status: 400, message: "Please enter your email address!" })
 }
 
-if (pwd === "" || pwd === undefined || pwd === null) {
+if (password === "" || password === undefined || password === null) {
     return res.status(400).json({ status: 400, message: "Please enter your password!" })
 }
 
@@ -27,17 +27,17 @@ try {
         return res.json(404).json({ status: 404, message: "Invalid email address!" })
     } 
 
-    const userPassword = await bcrypt.compare(pwd, createdUser.pwd);
+    const userPassword = await bcrypt.compare(password, createdUser.password);
 
     if (!userPassword) {
         return res.status(404).json({ status: 404, message: "Invalid password!" })
     };
 
-    const { pwd: hiddenPassword, ...userInfo } = createdUser;
+    const { password: hiddenPassword, ...userInfo } = createdUser;
 
-    if (createdUser) {
-        return res.status(200).json({ status: 200, data: createdUser })
-    }
+
+    return res.status(200).json({ status: 200, data: userInfo })
+
 
 } catch (error) {
     console.log(error);

@@ -9,15 +9,18 @@ import TOS from "./pages/TOS";
 import ContactSuccess from "./pages/ContactSuccess";
 import Login from "./pages/UserAccount/Login";
 import Signup from "./pages/UserAccount/Signup";
-import SignupSuccess from "./pages/UserAccount/SignupSuccess";
+import APIData from "./pages/Home/Recipes/APIData";
 
 
-function App() {
+const App = () => {
+
+
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/" element={<APIData />} />
           <Route path="/favorites" element={<MyFavorites />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
@@ -26,7 +29,6 @@ function App() {
           <Route path="/contact-success" element={<ContactSuccess />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/signup-success" element={<SignupSuccess />} />
         </Routes>
       </Router>
     </>
