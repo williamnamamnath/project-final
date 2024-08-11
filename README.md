@@ -1,1 +1,1 @@
-# Welcome to the NFIB Website!
+# The NFIB Website
