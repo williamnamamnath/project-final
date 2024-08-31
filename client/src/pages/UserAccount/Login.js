@@ -18,22 +18,27 @@ const Login = () => {
 
     const { loggedIn } = useContext(LoginInfoContext);
     const navigate = useNavigate();
-
-    const [userLogin, setUserLogin] = useState({
-        email: "",
-        password: ""
-    });
+    
     const [error, setError] = useState("");
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setUserLogin({ ...userLogin, [name]: value });
+    const LIEmail = (event) => {
+        setEmail(event.target.value);
       };
 
-    const blankInput = !userLogin.email || !userLogin.password;
+      const LIPassword = (event) => {
+        setPassword(event.target.value);
+      };
+
+    const blankInput = () => {
+        return (email && password !== "") && !isLoggingIn;
+    };
 
     const handleLogin = async (event) => {
         event.preventDefault();
+        setIsLoggingIn(true)
 
         try {
             const response = await fetch("/login", {
@@ -42,14 +47,15 @@ const Login = () => {
                     "content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    email: userLogin.email,
-                    password: userLogin.password
+                    email,
+                    password
                 }),
             });
 
             if (response.ok) {
                 const userInfo = await response.json();
-                await loggedIn(userInfo);
+                await loggedIn(userInfo); 
+                window.localStorage.setItem("loginConfirmed", true);
                 navigate("/");
             } else {
                 const errorTriggered = await response.text();
@@ -78,9 +84,9 @@ const Login = () => {
                         <input
                         className="input-field"
                         type="text"
-                        value={userLogin.email}
+                        value={email}
                         name="email"
-                        onChange={handleChange}
+                        onChange={LIEmail}
                         placeholder="E.g. Your email address"
                         ></input>
                         <br />
@@ -90,14 +96,14 @@ const Login = () => {
                         <input
                         className="input-field"
                         type="password"
-                        value={userLogin.password}
+                        value={password}
                         name="password"
-                        onChange={handleChange}
+                        onChange={LIPassword}
                         ></input>
                         <br />
                         <br />
-                        <button className="website-btn" disabled={blankInput}>
-                        Login
+                        <button type="submit" className="website-btn" disabled={!blankInput()}>
+                        {isLoggingIn ? "Please wait..." : "Login"}
                         </button>
                         <br />
                         <br/>
@@ -105,7 +111,7 @@ const Login = () => {
                         <br/>
                         Sign up <a href="/signup">here!</a>
                         </p>
-                        {error && <p>{error}</p>}
+                        {error && <p style={{color:"red"}}>{error}</p>}
                     </form>
                 </ContentWrapper>
             </Wrapper>

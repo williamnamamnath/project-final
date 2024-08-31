@@ -17,43 +17,43 @@ const Signup = () => {
     }, []);
 
     const [error, setError] = useState("");
-    const [userFname, setUserFname] = useState("");
-    const [userLname, setUserLname] = useState("");
-    const [userEmail, setUserEmail] = useState("");
-    const [userPhone, setUserPhone] = useState("");
-    const [userPwd, setUserPwd] = useState("");
-    const [userConfirmPwd, setUserConfirmPwd] = useState("");
+    const [fname, setFname] = useState("");
+    const [lname, setLname] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPwd, setConfirmPwd] = useState("");
 
     const { loggedIn } = useContext(LoginInfoContext);
     const navigate = useNavigate();
 
     const SUFname = (event) => {
-        setUserFname(event.target.value);
+        setFname(event.target.value);
       };
 
       const SULname = (event) => {
-        setUserLname(event.target.value);
+        setLname(event.target.value);
       };
 
       const SUEmail = (event) => {
-        setUserEmail(event.target.value);
+        setEmail(event.target.value);
       };
 
       const SUPhone = (event) => {
-        setUserPhone(event.target.value);
+        setPhone(event.target.value);
       };
 
       const SUPwd = (event) => {
-        setUserPwd(event.target.value);
+        setPassword(event.target.value);
       };
 
       const SUConfirmPwd = (event) => {
-        setUserConfirmPwd(event.target.value);
+        setConfirmPwd(event.target.value);
       };
 
-    const blankInput = !userFname || !userLname || !userEmail || !userPhone || !userPwd || !userConfirmPwd;       
+    const blankInput = !fname || !lname || !email || !phone || !password || !confirmPwd;       
 
-    const handleSignup = async (event) => {
+    const signupHandler = async (event) => {
         event.preventDefault();
 
     try {
@@ -64,27 +64,19 @@ const Signup = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userFname,
-          userLname,
-          userEmail,
-          userPhone,
-          userPwd,
-          userConfirmPwd,
+          fname,
+          lname,
+          email,
+          phone,
+          password,
+          confirmPwd,
         }),
       });
 
       if (response.ok) {
         const userInfo = await response.json();
-        await loggedIn(userInfo);
-
-        setUserFname("");
-        setUserLname("");
-        setUserEmail("");
-        setUserPhone("");
-        setUserPwd("");
-        setUserConfirmPwd("");
-
-        navigate("/signup-success");
+        await loggedIn(userInfo); 
+        navigate("/");
 
       } else {
         const errorTriggered = await response.text();
@@ -96,6 +88,7 @@ const Signup = () => {
       setError(error.message);
     }};
 
+
     return (
         <>
         <Navbar />
@@ -103,7 +96,7 @@ const Signup = () => {
             <Wrapper>
             <H1>Create Your Account</H1>
             <ContentWrapper>
-            <form className="form" onSubmit={handleSignup}>
+            <form className="form" onSubmit={signupHandler}>
                 <H3>Sign up to make the most of our services!</H3>
                 <br />
                 <br />
@@ -112,7 +105,7 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userFname}
+                    value={fname}
                     name="first-name"
                     onChange={SUFname}
                     placeholder="E.g. John"
@@ -125,7 +118,7 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userLname}
+                    value={lname}
                     name="last-name"
                     onChange={SULname}
                     placeholder="E.g. Smith"
@@ -138,7 +131,7 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="text"
-                    value={userEmail}
+                    value={email}
                     name="email"
                     onChange={SUEmail}
                     placeholder="E.g. johnsmith@email.com"
@@ -154,7 +147,7 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="tel"
-                    value={userPhone}
+                    value={phone}
                     name="phone"
                     onChange={SUPhone}
                     required
@@ -166,7 +159,7 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="password"
-                    value={userPwd}
+                    value={password}
                     name="password"
                     onChange={SUPwd}
                     required
@@ -178,17 +171,17 @@ const Signup = () => {
                 <input
                     className="input-field"
                     type="password"
-                    value={userConfirmPwd}
+                    value={confirmPwd}
                     name="confirm-password"
                     onChange={SUConfirmPwd}
                     required
                 ></input>
                 <br />
                 <br />
-                <button className="website-btn" disabled={blankInput}>
+                <button type="submit" className="website-btn" onChange={signupHandler} disabled={blankInput}>
                 Sign Up
                 </button>
-                {error && <p>{error}</p>}
+                {error && <p style={{color:"red"}}>{error}</p>}
             </form>
             </ContentWrapper>
             </Wrapper>

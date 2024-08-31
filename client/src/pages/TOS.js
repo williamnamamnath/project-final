@@ -96,7 +96,12 @@ const TOS = () => {
 }; 
 
 export const ContentWrapper = styled.div`
-    padding: 20px 50px;
+    padding: 20px 40px;
+
+    @media all and (min-width: 360px) {
+    padding: 0;
+    flex-wrap: wrap;
+  }
 `
 const Disclaimer = styled.p`
     font-weight: bold;

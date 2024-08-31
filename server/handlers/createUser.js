@@ -11,31 +11,33 @@ const createUser = async (req, res) => {
     try {
         await client.connect();
         const db = client.db("nutrissence");
-        const { firstName, lastName, email, phone, pwd, confirmPwd } = req.body;
+        const { fname, lname, email, phone, password, confirmPwd } = req.body;
         console.log("Connected to database.");
 
-        if (pwd !== confirmPwd) {
-            return res.status(404).json({ status: 404, message: "Your passwords do not match! Please try again."})
+        if (password !== confirmPwd) {
+            res.status(404).json({ status: 404, message: "Your passwords do not match! Please try again."});
+            return
         };
 
         const saltRounds = 10;
-        const hiddenPassword = await bcrypt.hash(pwd, saltRounds);
+        const hiddenPassword = await bcrypt.hash(password, saltRounds);
 
         const newUser = {
             _id: uuidv4(),
-            firstName,
-            lastName,
+            fname,
+            lname,
             email,
             phone,
-            pwd: hiddenPassword
+            password: hiddenPassword
         }
 
         const createNewUser = await db.collection("users").insertOne(newUser);
-        return res.status(201).json({ status: 201, _id: createNewUser.insertedId, message: `A new user has been added!`})
+
+        res.status(201).json({ status: 201, _id: createNewUser.insertedId, message: `A new user has been added!`})
 
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message })
     } finally {
         await client.close();
         console.log("Disconnected from database.");

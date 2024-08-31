@@ -4,19 +4,16 @@ import './index.css';
 
 import App from './App';
 import LoginInfoProvider from './pages/UserAccount/LoginInfo';
-import reportWebVitals from './reportWebVitals';
+import RecipesInfoProvider from './pages/Home/Recipes/RecipesInfo';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
     <LoginInfoProvider>
-      <App />
+      <RecipesInfoProvider>
+        <App />
+      </RecipesInfoProvider>
     </LoginInfoProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
