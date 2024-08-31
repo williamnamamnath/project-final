@@ -18,11 +18,16 @@ const About = () => {
         <Navbar />
         <PageSpacing>
             <Wrapper>
+<<<<<<< HEAD
                 <H1>NUTRISSENCE</H1>
+=======
+                <H1>NEUROFIBROMATOSIS</H1>
+>>>>>>> dadddcda7c1a86667d6b4d62a942e4378f78490e
                 <br/>
                 <br/>
                 <ContentWrapper>
                 <p style={{textAlign:"center"}}>
+<<<<<<< HEAD
                 <b>Founded in 1989 in Quebec, Canada</b> on the belief that nutrition is the most essential part to a healthy lifestyle, we hope Nutrissence can help you build your dream diet.
                 <br/>
                 <br/>
@@ -34,6 +39,12 @@ const About = () => {
                 <br/>
                 <br/>
                 <br/>
+=======
+                Temporary filler text.
+                    </p>
+                <br/>
+                <br/>
+>>>>>>> dadddcda7c1a86667d6b4d62a942e4378f78490e
                 <br/>
 
                 </ContentWrapper>

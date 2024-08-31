@@ -13,7 +13,7 @@ import { H3 } from "../UserAccount/Login";
 const Home = () => {
 
   useEffect(() => {
-    document.title = "NUTRISSENCE"
+    document.title = "NEUROFIBROMATOSIS"
 }, []);
 
 const { loginConfirmed } = useContext(LoginInfoContext);
@@ -31,6 +31,7 @@ const { loginConfirmed } = useContext(LoginInfoContext);
                 </>
               )}
             <Panel>
+<<<<<<< HEAD
             <Brand>NUTRISSENCE</Brand>
             <Slogan>
               Take Control of Your Health!
@@ -54,6 +55,14 @@ const { loginConfirmed } = useContext(LoginInfoContext);
                   <H3><a href="/login" style={{color:"white"}}>Login</a> to use our search engine to find specific recipes!</H3>
                 </Panel>
               )}
+=======
+            <Brand>NEUROFIBROMATOSIS</Brand>
+            <Slogan>
+              Filler slogan.
+            </Slogan>
+            </Panel>
+            <PageSpacing />
+>>>>>>> dadddcda7c1a86667d6b4d62a942e4378f78490e
             </ContentWrapper>
         <PageSpacing />
         </div>

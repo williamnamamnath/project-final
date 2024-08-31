@@ -12,6 +12,7 @@ const Footer = () => {
         <Wrapper>
         <div className="footer-main">
         <div className="brand-info">
+<<<<<<< HEAD
           <h1 className="brand-name">NUTRISSENCE</h1>
           <h2>Based in Quebec, Canada</h2>
         </div>
@@ -27,15 +28,21 @@ const Footer = () => {
           <br />
           <div className="footer-links">
             <h2 style={{margin:"20px 0 0 34px", textDecoration:"underline"}}>Customer Service</h2>
+=======
+          <h1 className="brand-name">NEUROFIBROMATOSIS</h1>
+          <h2>Based in Quebec, Canada</h2>
+        </div>
+          <br />
+          <br />
+          <div className="footer-links">
+            <h2 style={{margin:"20px 0 0 34px", textDecoration:"underline"}}>More Information On Us</h2>
+>>>>>>> dadddcda7c1a86667d6b4d62a942e4378f78490e
             <ul>
               <FooterLink to="/contact" className="footer-link">
                 <li>Contact</li>
               </FooterLink>
               <FooterLink to="/faq" className="footer-link">
                 <li>FAQs</li>
-              </FooterLink>
-              <FooterLink to="/tos" className="footer-link">
-                <li>Terms of Services</li>
               </FooterLink>
             </ul>
           </div>
