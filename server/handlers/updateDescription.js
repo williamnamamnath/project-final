@@ -6,13 +6,17 @@ const updateDescription = async (req, res) => {
 
 const client = new MongoClient(MONGO_URI);
 const { item } = req.params;
+const { listDescription } = req.body;
 
 try {
 
     const db = client.db("nutrissence"); 
     console.log("Connected to database");
 
-    await db.collection("favorites").updateOne({ _id: item }, { $set: req.body});
+    await db.collection("favorites").updateOne(
+        { name: item }, 
+        { $set: { description: listDescription }}
+    );
 
     return res.status(200).json({ status: 200, message: "The item has been updated!" });
 
