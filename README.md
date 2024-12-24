@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NUTRISSENCE :leaves:
 
 
@@ -128,7 +127,4 @@ In other words, you will definitely want to sign up in order to take advantage o
 
 
 
-## Visit our website to begin your healthy journey today!
-=======
-# The NFIB Website
->>>>>>> dadddcda7c1a86667d6b4d62a942e4378f78490e
+## Visit Nutrissence to begin your healthy journey today!
